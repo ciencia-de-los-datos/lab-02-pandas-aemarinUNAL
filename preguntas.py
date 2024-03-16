@@ -94,7 +94,7 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return tbl1['_c4'].sort_values().str.upper().unique()
+    return list(tbl1['_c4'].sort_values().str.upper().unique())
 
 
 def pregunta_07():
@@ -165,8 +165,8 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return tbl0.sort_values(['_c1', '_c2']).groupby('_c1')['_c2'].apply(lambda x: ':'.join(map(str, x))).reset_index()
-
+    return tbl0.sort_values(['_c1', '_c2']).groupby('_c1')['_c2'].apply(lambda x: ':'.join(map(str, x)))
+# print(pregunta_10())
 
 def pregunta_11():
     """
@@ -184,7 +184,7 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return tbl1.groupby('_c0')['_c4'].apply(lambda x: ','.join(x)).reset_index()
+    return tbl1.groupby('_c0').apply(lambda x: ','.join(sorted(x['_c4']))).reset_index(name='_c4')
 
 
 def pregunta_12():
@@ -223,4 +223,3 @@ def pregunta_13():
     """
     merged_tbl = pd.merge(tbl0, tbl2, on='_c0')
     return merged_tbl.groupby('_c1')['_c5b'].sum()
-print(pregunta_13())
